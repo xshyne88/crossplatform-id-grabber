@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"os"
 	"os/exec"
@@ -13,19 +12,20 @@ import (
 	"github.com/denisbrodbeck/machineid"
 )
 
-const fileName = "output.txt"
-
+// Payload is what will be written to the output file (or eventually Stdout)
 type Payload struct {
-	OS string
-	machineID string
-	systemUUID string
+	OS           string
+	machineID    string
+	systemUUID   string
 	serialNumber string
 }
 
 const (
 	windows = "windows"
-	darwin = "darwin"
-	linux = "linux"
+	darwin  = "darwin"
+	linux   = "linux"
+
+	fileName = "output.txt"
 )
 
 func main() {
@@ -36,8 +36,8 @@ func main() {
 	machineID = getMachineID()
 
 	payload := &Payload{
-		OS: operatingSystem
-		machineID: machineID
+		OS:        operatingSystem,
+		machineID: machineID,
 	}
 
 	switch operatingSystem {
@@ -50,7 +50,7 @@ func main() {
 		output = linuxSerialNumber()
 		systemUUID = string(getLinuxOSSystemUUID())
 	default:
-		panic("couldn't detect os")
+		panic("Could not detect Operating system")
 	}
 
 	writeOutput(payload)
@@ -71,7 +71,7 @@ func macInfo() []byte {
 	return findMacSerial(out)
 }
 
-func findMacHardwareUUID(out []byte) string, error {
+func findMacHardwareUUID(out []byte) (string, error) {
 	re := regexp.MustCompile(`IOPlatformUUID\" = \"(.*)\"`)
 	matchSlice := re.FindSubmatch(out)
 	return string(matchSlice[1])
@@ -111,7 +111,7 @@ func createOuputFile() {
 		cwd = ""
 	}
 
-	fmt.Printf("File created: %s/%s\n", cwd, fileName)
+	fmt.Printf("%s/%s created\n", cwd, fileName)
 	return nil
 }
 
