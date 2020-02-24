@@ -52,10 +52,8 @@ func main() {
 		payload.serialNumber = serialNumber
 		payload.systemUUID = systemUUID
 	case linux:
-		systemUUID := getLinuxOSSystemUUID()
-		serialNumber := getlinuxSerialNumber()
-		payload.serialNumber = serialNumber
-		payload.systemUUID = systemUUID
+		payload.serialNumber = getlinuxSerialNumber()
+		payload.systemUUID = getLinuxOSSystemUUID()
 	default:
 		panic("Could not detect Operating system")
 	}
