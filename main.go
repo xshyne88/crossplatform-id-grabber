@@ -63,7 +63,7 @@ func main() {
 }
 
 func windowsUUID() string {
-	out, err := exec.Command("wmic", "csproduct", "get", "\"UUID\"").Output()
+	out, err := exec.Command("wmic", "csproduct", "get", "UUID").Output()
 	dealWithError(err)
 
 	return string(out)
