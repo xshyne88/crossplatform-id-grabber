@@ -134,7 +134,7 @@ func writeOutput(p *Payload) {
 	f, ferr := createOutputFile()
 	dealWithError(ferr)
 
-	numBytes, err := f.WriteString(fmt.Sprintf("SERIAL_NUMBER=%s\nMACHINEID=%s\nHARDWARE_ADDRESSES=%v", p.serialNumber, p.machineID, p.hardwareAddresses))
+	numBytes, err := f.WriteString(fmt.Sprintf("SERIAL_NUMBER=%s\nSYSTEMUUID=%s\nMACHINEID=%s\nHARDWARE_ADDRESSES=%v", p.serialNumber, p.systemUUID, p.machineID, p.hardwareAddresses))
 	if err != nil {
 		fmt.Println(err)
 		f.Close()
